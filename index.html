@@ -6,16 +6,23 @@
     <title>Final Average Calculator</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-
         .result {
             margin-top: 20px;
             font-size: 1.25rem;
+        }
+        .grading-chart {
+            margin-top: 40px;
+        }
+        .grading-chart table {
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Final Average Calculator</h2>
+        <p class="text-center">This calculator is based on the STI Grading System.</p>
+
         <form id="gradeForm">
             <div class="form-group">
                 <label for="prelim">Prelim Grade (20%)</label>
@@ -37,6 +44,31 @@
         </form>
 
         <div class="result text-center" id="result"></div>
+
+        <div class="grading-chart">
+            <h4 class="text-center mt-5">STI Grading Chart</h4>
+            <table class="table table-bordered text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Percentage</th>
+                        <th>Grade</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>97.50 - 100%</td><td>1.00</td><td>Excellent</td></tr>
+                    <tr><td>94.50 - 97.49%</td><td>1.25</td><td>Very Good</td></tr>
+                    <tr><td>91.50 - 94.49%</td><td>1.50</td><td>Very Good</td></tr>
+                    <tr><td>88.50 - 91.49%</td><td>1.75</td><td>Very Good</td></tr>
+                    <tr><td>85.50 - 88.49%</td><td>2.00</td><td>Satisfactory</td></tr>
+                    <tr><td>81.50 - 85.49%</td><td>2.25</td><td>Satisfactory</td></tr>
+                    <tr><td>77.50 - 81.49%</td><td>2.50</td><td>Satisfactory</td></tr>
+                    <tr><td>73.50 - 77.49%</td><td>2.75</td><td>Fair</td></tr>
+                    <tr><td>69.50 - 73.49%</td><td>3.00</td><td>Passing</td></tr>
+                    <tr><td>Below 69.50%</td><td>5.00</td><td>Failed</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
