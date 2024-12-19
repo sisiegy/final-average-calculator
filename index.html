@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Average Calculator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Final Average Calculator</h2>
+        <form id="gradeForm">
+            <div class="form-group">
+                <label for="prelim">Prelim Grade (20%)</label>
+                <input type="number" class="form-control" id="prelim" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <label for="midterm">Midterm Grade (20%)</label>
+                <input type="number" class="form-control" id="midterm" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <label for="prefinals">Prefinals Grade (20%)</label>
+                <input type="number" class="form-control" id="prefinals" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <label for="finals">Finals Grade (40%)</label>
+                <input type="number" class="form-control" id="finals" min="0" max="100" required>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" onclick="calculateAverage()">Calculate</button>
+        </form>
+
+        <div class="result text-center" id="result"></div>
+    </div>
+
+    <script>
+        function calculateAverage() {
+            const prelim = parseFloat(document.getElementById('prelim').value);
+            const midterm = parseFloat(document.getElementById('midterm').value);
+            const prefinals = parseFloat(document.getElementById('prefinals').value);
+            const finals = parseFloat(document.getElementById('finals').value);
+
+            if (isNaN(prelim) || isNaN(midterm) || isNaN(prefinals) || isNaN(finals)) {
+                document.getElementById('result').innerHTML = '<div class="alert alert-danger">Please enter valid numbers for all fields.</div>';
+                return;
+            }
+
+            const finalAverage = (prelim * 0.2) + (midterm * 0.2) + (prefinals * 0.2) + (finals * 0.4);
+            let grade = '';
+            let remarks = '';
+
+            if (finalAverage >= 97.5) {
+                grade = '1.00';
+                remarks = 'Excellent';
+            } else if (finalAverage >= 94.5) {
+                grade = '1.25';
+                remarks = 'Very Good';
+            } else if (finalAverage >= 91.5) {
+                grade = '1.50';
+                remarks = 'Very Good';
+            } else if (finalAverage >= 88.5) {
+                grade = '1.75';
+                remarks = 'Very Good';
+            } else if (finalAverage >= 85.5) {
+                grade = '2.00';
+                remarks = 'Satisfactory';
+            } else if (finalAverage >= 81.5) {
+                grade = '2.25';
+                remarks = 'Satisfactory';
+            } else if (finalAverage >= 77.5) {
+                grade = '2.50';
+                remarks = 'Satisfactory';
+            } else if (finalAverage >= 73.5) {
+                grade = '2.75';
+                remarks = 'Fair';
+            } else if (finalAverage >= 69.5) {
+                grade = '3.00';
+                remarks = 'Passing';
+            } else {
+                grade = '5.00';
+                remarks = 'Failed';
+            }
+
+            document.getElementById('result').innerHTML = `
+                <div class="alert alert-success">
+                    <p><strong>Final Average:</strong> ${finalAverage.toFixed(2)}</p>
+                    <p><strong>Grade:</strong> ${grade}</p>
+                    <p><strong>Remarks:</strong> ${remarks}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
