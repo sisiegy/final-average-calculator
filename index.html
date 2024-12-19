@@ -69,65 +69,77 @@
                 </tbody>
             </table>
         </div>
-    </div
-        <div class="mb-5"></div>
+    </div>
+    <div class="mb-5"></div>
 
     <script>
-        function calculateAverage() {
-            const prelim = parseFloat(document.getElementById('prelim').value);
-            const midterm = parseFloat(document.getElementById('midterm').value);
-            const prefinals = parseFloat(document.getElementById('prefinals').value);
-            const finals = parseFloat(document.getElementById('finals').value);
+       function calculateAverage() {
+    const prelim = parseFloat(document.getElementById('prelim').value);
+    const midterm = parseFloat(document.getElementById('midterm').value);
+    const prefinals = parseFloat(document.getElementById('prefinals').value);
+    const finals = parseFloat(document.getElementById('finals').value);
 
-            if (isNaN(prelim) || isNaN(midterm) || isNaN(prefinals) || isNaN(finals)) {
-                document.getElementById('result').innerHTML = '<div class="alert alert-danger">Please enter valid numbers for all fields.</div>';
-                return;
-            }
+    // Validation for numbers exceeding 100 or negative numbers
+    if (prelim > 100 || midterm > 100 || prefinals > 100 || finals > 100) {
+        document.getElementById('result').innerHTML = '<div class="alert alert-danger">Grades cannot be higher than 100.</div>';
+        return;
+    }
 
-            const finalAverage = (prelim * 0.2) + (midterm * 0.2) + (prefinals * 0.2) + (finals * 0.4);
-            let grade = '';
-            let remarks = '';
+    if (prelim < 0 || midterm < 0 || prefinals < 0 || finals < 0) {
+        document.getElementById('result').innerHTML = '<div class="alert alert-danger">Grades cannot be negative.</div>';
+        return;
+    }
 
-            if (finalAverage >= 97.5) {
-                grade = '1.00';
-                remarks = 'Excellent';
-            } else if (finalAverage >= 94.5) {
-                grade = '1.25';
-                remarks = 'Very Good';
-            } else if (finalAverage >= 91.5) {
-                grade = '1.50';
-                remarks = 'Very Good';
-            } else if (finalAverage >= 88.5) {
-                grade = '1.75';
-                remarks = 'Very Good';
-            } else if (finalAverage >= 85.5) {
-                grade = '2.00';
-                remarks = 'Satisfactory';
-            } else if (finalAverage >= 81.5) {
-                grade = '2.25';
-                remarks = 'Satisfactory';
-            } else if (finalAverage >= 77.5) {
-                grade = '2.50';
-                remarks = 'Satisfactory';
-            } else if (finalAverage >= 73.5) {
-                grade = '2.75';
-                remarks = 'Fair';
-            } else if (finalAverage >= 69.5) {
-                grade = '3.00';
-                remarks = 'Passing';
-            } else {
-                grade = '5.00';
-                remarks = 'Failed';
-            }
+    if (isNaN(prelim) || isNaN(midterm) || isNaN(prefinals) || isNaN(finals)) {
+        document.getElementById('result').innerHTML = '<div class="alert alert-danger">Please enter valid numbers for all fields.</div>';
+        return;
+    }
 
-            document.getElementById('result').innerHTML = `
-                <div class="alert alert-success">
-                    <p><strong>Final Average:</strong> ${finalAverage.toFixed(2)}</p>
-                    <p><strong>Grade:</strong> ${grade}</p>
-                    <p><strong>Remarks:</strong> ${remarks}</p>
-                </div>
-            `;
-        }
+    const finalAverage = (prelim * 0.2) + (midterm * 0.2) + (prefinals * 0.2) + (finals * 0.4);
+    let grade = '';
+    let remarks = '';
+
+    if (finalAverage >= 97.5) {
+        grade = '1.00';
+        remarks = 'Excellent';
+    } else if (finalAverage >= 94.5) {
+        grade = '1.25';
+        remarks = 'Very Good';
+    } else if (finalAverage >= 91.5) {
+        grade = '1.50';
+        remarks = 'Very Good';
+    } else if (finalAverage >= 88.5) {
+        grade = '1.75';
+        remarks = 'Very Good';
+    } else if (finalAverage >= 85.5) {
+        grade = '2.00';
+        remarks = 'Satisfactory';
+    } else if (finalAverage >= 81.5) {
+        grade = '2.25';
+        remarks = 'Satisfactory';
+    } else if (finalAverage >= 77.5) {
+        grade = '2.50';
+        remarks = 'Satisfactory';
+    } else if (finalAverage >= 73.5) {
+        grade = '2.75';
+        remarks = 'Fair';
+    } else if (finalAverage >= 69.5) {
+        grade = '3.00';
+        remarks = 'Passing';
+    } else {
+        grade = '5.00';
+        remarks = 'Failed';
+    }
+
+    document.getElementById('result').innerHTML = `
+        <div class="alert alert-success">
+            <p><strong>Final Average:</strong> ${finalAverage.toFixed(2)}</p>
+            <p><strong>Grade:</strong> ${grade}</p>
+            <p><strong>Remarks:</strong> ${remarks}</p>
+        </div>
+    `;
+}
+
     </script>
 </body>
 </html>
