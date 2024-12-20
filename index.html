@@ -5,7 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Final Average Calculator</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    
     <style>
+        body {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+        .dark-mode .table {
+            background-color: #1e1e1e;
+            color: #f5f5f5;
+        }
+        .dark-mode .table thead.thead-dark {
+            background-color: #343a40;
+        }
+        .dark-mode .btn-primary {
+            background-color: #7851A9;
+            border-color: #555;
+        }
         .result {
             margin-top: 20px;
             font-size: 1.25rem;
@@ -16,11 +36,27 @@
         .grading-chart table {
             width: 100%;
         }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header h2 {
+            margin: 0;
+        }
+        .header .icon {
+            margin-left: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Final Average Calculator</h2>
+        <div class="header d-flex justify-content-end">
+            <i class="fas fa-moon icon " id="darkModeIcon"></i>
+        </div>
+        <h2 class="text-center">Final Average Calculator</h2>
         <p class="text-center">This calculator is based on the STI Grading System.</p>
 
         <form id="gradeForm">
@@ -47,7 +83,7 @@
 
         <div class="grading-chart">
             <h4 class="text-center mt-5">STI Grading Chart</h4>
-            <table class="table table-bordered text-center">
+            <table class="table table-bordered text-center mt-4">
                 <thead class="thead-dark">
                     <tr>
                         <th>Percentage</th>
@@ -64,7 +100,7 @@
                     <tr><td>81.50 - 85.49%</td><td>2.25</td><td>Satisfactory</td></tr>
                     <tr><td>77.50 - 81.49%</td><td>2.50</td><td>Satisfactory</td></tr>
                     <tr><td>73.50 - 77.49%</td><td>2.75</td><td>Fair</td></tr>
-                    <tr><td>69.50 - 73.49%</td><td>3.00</td><td>Passing</td></tr>
+                    <tr><td>69.50 - 73.49%</td><td>3.00</td><td>Passed</td></tr>
                     <tr><td>Below 69.50%</td><td>5.00</td><td>Failed</td></tr>
                 </tbody>
             </table>
@@ -73,73 +109,71 @@
     <div class="mb-5"></div>
 
     <script>
-       function calculateAverage() {
-    const prelim = parseFloat(document.getElementById('prelim').value);
-    const midterm = parseFloat(document.getElementById('midterm').value);
-    const prefinals = parseFloat(document.getElementById('prefinals').value);
-    const finals = parseFloat(document.getElementById('finals').value);
+        function calculateAverage() {
+            const prelim = parseFloat(document.getElementById('prelim').value);
+            const midterm = parseFloat(document.getElementById('midterm').value);
+            const prefinals = parseFloat(document.getElementById('prefinals').value);
+            const finals = parseFloat(document.getElementById('finals').value);
 
-    // Validation for numbers exceeding 100 or negative numbers
-    if (prelim > 100 || midterm > 100 || prefinals > 100 || finals > 100) {
-        document.getElementById('result').innerHTML = '<div class="alert alert-danger">Grades cannot be higher than 100.</div>';
-        return;
-    }
+            if (prelim > 100 || midterm > 100 || prefinals > 100 || finals > 100) {
+                document.getElementById('result').innerHTML = '<div class="alert alert-danger">Grades cannot be higher than 100.</div>';
+                return;
+            }
+            if (prelim < 0 || midterm < 0 || prefinals < 0 || finals < 0) {
+                document.getElementById('result').innerHTML = '<div class="alert alert-danger">Grades cannot be negative.</div>';
+                return;
+            }
+            if (isNaN(prelim) || isNaN(midterm) || isNaN(prefinals) || isNaN(finals)) {
+                document.getElementById('result').innerHTML = '<div class="alert alert-danger">Please enter valid numbers for all fields.</div>';
+                return;
+            }
 
-    if (prelim < 0 || midterm < 0 || prefinals < 0 || finals < 0) {
-        document.getElementById('result').innerHTML = '<div class="alert alert-danger">Grades cannot be negative.</div>';
-        return;
-    }
+            const finalAverage = (prelim * 0.2) + (midterm * 0.2) + (prefinals * 0.2) + (finals * 0.4);
+            let grade = '';
+            let remarks = '';
 
-    if (isNaN(prelim) || isNaN(midterm) || isNaN(prefinals) || isNaN(finals)) {
-        document.getElementById('result').innerHTML = '<div class="alert alert-danger">Please enter valid numbers for all fields.</div>';
-        return;
-    }
+            if (finalAverage >= 97.5) {
+                grade = '1.00'; remarks = 'Excellent';
+            } else if (finalAverage >= 94.5) {
+                grade = '1.25'; remarks = 'Very Good';
+            } else if (finalAverage >= 91.5) {
+                grade = '1.50'; remarks = 'Very Good';
+            } else if (finalAverage >= 88.5) {
+                grade = '1.75'; remarks = 'Very Good';
+            } else if (finalAverage >= 85.5) {
+                grade = '2.00'; remarks = 'Satisfactory';
+            } else if (finalAverage >= 81.5) {
+                grade = '2.25'; remarks = 'Satisfactory';
+            } else if (finalAverage >= 77.5) {
+                grade = '2.50'; remarks = 'Satisfactory';
+            } else if (finalAverage >= 73.5) {
+                grade = '2.75'; remarks = 'Fair';
+            } else if (finalAverage >= 69.5) {
+                grade = '3.00'; remarks = 'Passing';
+            } else {
+                grade = '5.00'; remarks = 'Failed';
+            }
 
-    const finalAverage = (prelim * 0.2) + (midterm * 0.2) + (prefinals * 0.2) + (finals * 0.4);
-    let grade = '';
-    let remarks = '';
+            document.getElementById('result').innerHTML = `
+                <div class="alert alert-success">
+                    <p><strong>Final Average:</strong> ${finalAverage.toFixed(2)}</p>
+                    <p><strong>Grade:</strong> ${grade}</p>
+                    <p><strong>Remarks:</strong> ${remarks}</p>
+                </div>`;
+        }
 
-    if (finalAverage >= 97.5) {
-        grade = '1.00';
-        remarks = 'Excellent';
-    } else if (finalAverage >= 94.5) {
-        grade = '1.25';
-        remarks = 'Very Good';
-    } else if (finalAverage >= 91.5) {
-        grade = '1.50';
-        remarks = 'Very Good';
-    } else if (finalAverage >= 88.5) {
-        grade = '1.75';
-        remarks = 'Very Good';
-    } else if (finalAverage >= 85.5) {
-        grade = '2.00';
-        remarks = 'Satisfactory';
-    } else if (finalAverage >= 81.5) {
-        grade = '2.25';
-        remarks = 'Satisfactory';
-    } else if (finalAverage >= 77.5) {
-        grade = '2.50';
-        remarks = 'Satisfactory';
-    } else if (finalAverage >= 73.5) {
-        grade = '2.75';
-        remarks = 'Fair';
-    } else if (finalAverage >= 69.5) {
-        grade = '3.00';
-        remarks = 'Passing';
-    } else {
-        grade = '5.00';
-        remarks = 'Failed';
-    }
+        // Dark Mode Toggle
+        document.getElementById('darkModeIcon').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
 
-    document.getElementById('result').innerHTML = `
-        <div class="alert alert-success">
-            <p><strong>Final Average:</strong> ${finalAverage.toFixed(2)}</p>
-            <p><strong>Grade:</strong> ${grade}</p>
-            <p><strong>Remarks:</strong> ${remarks}</p>
-        </div>
-    `;
-}
-
+            if (document.body.classList.contains('dark-mode')) {
+                document.getElementById('darkModeIcon').classList.remove('fa-moon');
+                document.getElementById('darkModeIcon').classList.add('fa-sun');
+            } else {
+                document.getElementById('darkModeIcon').classList.remove('fa-sun');
+                document.getElementById('darkModeIcon').classList.add('fa-moon');
+            }
+        });
     </script>
 </body>
 </html>
