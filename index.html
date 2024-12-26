@@ -6,13 +6,15 @@
     <title>Final Average Calculator</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     
     <style>
         body {
             transition: background-color 0.3s, color 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
         .dark-mode {
-            background-color: #121212;
+            background-color: #212121;
             color: #f5f5f5;
         }
         .dark-mode .table {
@@ -53,9 +55,14 @@
 </head>
 <body>
     <div class="container mt-5">
-        <div class="header d-flex justify-content-end">
+        <div class="header d-flex justify-content-start">
+            
+        </div>
+        <div class="header d-flex justify-content-between">
+            <h4 style="cursor: pointer;" onclick="goHome()">sgfrdgrln<h4>
             <i class="fas fa-moon icon " id="darkModeIcon"></i>
         </div>
+        <a href="/gwa-calculator">Try GWA Calculator!</a>
         <h2 class="text-center">Final Average Calculator</h2>
         <p class="text-center">This calculator is based on the STI Grading System.</p>
 
@@ -109,6 +116,11 @@
     <div class="mb-5"></div>
 
     <script>
+
+        function goHome() {
+            window.location.href = "/";
+        }
+
         function calculateAverage() {
             const prelim = parseFloat(document.getElementById('prelim').value);
             const midterm = parseFloat(document.getElementById('midterm').value);
